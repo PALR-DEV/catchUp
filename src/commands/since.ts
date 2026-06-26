@@ -35,14 +35,15 @@ export async function sinceCommand(
         const diff = getDiff(timeframe);
 
         if (!diff) {
-            spinner.stop();
-            p.log.warn("No changes found for that timeframe.");
+            spinner.stop("No changes found for that timeframe.");
             process.exit(0);
         }
 
-        spinner.message("Summarizing with AI...");
+        spinner.stop("✓ Changes fetched!");
+
+        spinner.start("Summarizing with AI...");
         const summary = await summarize(diff, config);
-        spinner.stop("Done!");
+        spinner.stop("✓ Done!");
 
         p.outro("catchup complete");
 

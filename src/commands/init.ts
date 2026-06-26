@@ -26,6 +26,7 @@ export async function initCommand() {
     }
 
     let apiKey: string | undefined;
+    let model: string | undefined;
 
     if (provider !== "ollama") {
         apiKey = (await p.password({
@@ -38,9 +39,24 @@ export async function initCommand() {
             p.cancel("Setup cancelled.");
             process.exit(0);
         }
+    } else {
+        p.log.info(
+            "Make sure Ollama is installed and running with: ollama serve"
+        );
+        const ollamaModel = await p.text({
+            message: "What model do you want to use?",
+            placeholder: "mistral",
+            defaultValue: "mistral",
+        });
+
+        if (p.isCancel(ollamaModel)) {
+            p.cancel("Setup cancelled.");
+            process.exit(0);
+        }
+        model = ollamaModel as string;
     }
 
-    saveConfig({ provider: provider as Provider, apiKey });
-    p.log.success("All done!");  
+    saveConfig({ provider: provider as Provider, apiKey, model });
+    p.log.success("All done!");
     p.outro("Config saved! You are ready to use catchup.");
 }

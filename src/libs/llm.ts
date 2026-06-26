@@ -13,7 +13,7 @@ function getModel(config: Config) {
             return anthropic("claude-sonnet-4-6");
         case "openai":
             return openai("gpt-4o");
-        
+
         case "ollama":
             return ollama("qwen3:8b");
         default:
@@ -23,13 +23,23 @@ function getModel(config: Config) {
 
 
 function buildPrompt(diff: string): string {
-    return `You are a senior software engineer. Summarize the following git changes clearly in markdown:
-- What changed
-- What was refactored or removed
-- Any important patterns or architectural shifts
+    return `You are a senior software engineer reviewing a git diff. Summarize the changes clearly in markdown using the following sections:
 
-Keep it concise and developer-friendly.
+## What Changed
+List new features, files added, and functionality introduced.
 
+## Code Changes
+Highlight the most important code-level changes. Show relevant snippets if they help explain the change.
+
+## Refactored or Removed
+List anything that was reorganized, renamed, or deleted.
+
+## Architectural Shifts
+Note any patterns, structural changes, or design decisions worth calling out.
+
+Be concise and developer-friendly. Use bullet points. Include code snippets where relevant using markdown code blocks.
+
+Here is the git diff:
 ${diff}`;
 }
 
