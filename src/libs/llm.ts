@@ -3,6 +3,7 @@ import { anthropic } from "@ai-sdk/anthropic";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { openai } from "@ai-sdk/openai";
 import { type Config } from "../types/index";
+import { ollama } from 'ai-sdk-ollama';
 
 
 
@@ -12,6 +13,9 @@ function getModel(config: Config) {
             return anthropic("claude-sonnet-4-6");
         case "openai":
             return openai("gpt-4o");
+        
+        case "ollama":
+            return ollama("qwen3:8b");
         default:
             throw new Error(`Unsupported provider: ${config.provider}`);
     }

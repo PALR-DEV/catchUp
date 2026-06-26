@@ -1,0 +1,48 @@
+{
+  "name": "catchup",
+  "version": "1.0.0",
+  "private": true,
+  "description": "this is a cli tool to get a summary of all changes made in a codebase in a time frame",
+  "keywords": [
+    "cli",
+    "tool",
+    "AI"
+  ],
+  "license": "MIT",
+  "author": "Pedro Lorenzo Rosario",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.0",
+    "@ai-sdk/openai": "^4.0.0",
+    "@ai-sdk/openai-compatible": "^3.0.0",
+    "@clack/prompts": "^1.6.0",
+    "@types/node": "^26.0.1",
+    "ai": "^7.0.2",
+    "ai-sdk-ollama": "^4.0.0",
+    "bun-types": "^1.3.14",
+    "commander": "^15.0.0",
+    "marked": "^18.0.5",
+    "marked-terminal": "^7.3.0",
+    "ms": "^2.1.3",
+    "open": "^11.0.0",
+    "typescript": "^5.9.3",
+    "undici-types": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/marked-terminal": "^6.1.1",
+    "@types/ms": "^2.1.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "module": "index.ts"
+}

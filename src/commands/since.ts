@@ -5,6 +5,7 @@ import { loadConfig } from "../libs/config";
 import { getDiff } from "../libs/git";
 import { summarize } from "../libs/llm";
 import { openInBrowser, renderMarkdown, saveToFile } from "../libs/render";
+import { isOllamaRunning } from "../helpers/ollama";
 
 export async function sinceCommand(
     timeframe: StringValue,
@@ -18,6 +19,13 @@ export async function sinceCommand(
     if (!config) {
         p.log.error("No config found. Run catchup init first.");
         process.exit(1);
+    }
+
+    if (config.provider === "ollama") {
+        if (!isOllamaRunning()) {
+            p.log.error("Ollama is not running. Start it with: ollama serve");
+            process.exit(1);
+        }
     }
 
     const spinner = p.spinner();
@@ -48,3 +56,7 @@ export async function sinceCommand(
         process.exit(1);
     }
 }
+
+// TODO: handle git warning "log for 'HEAD' only goes back to <date>"
+// when the repo history is shorter than the requested timeframe,
+// parse the warning and use the earliest available date instead.

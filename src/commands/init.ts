@@ -15,8 +15,7 @@ export async function initCommand() {
             {
                 value: "ollama",
                 label: "Ollama (local)",
-                hint: "coming soon",
-                disabled: true,
+                hint: "free and local, but requires Ollama to be installed",
             },
         ],
     });
@@ -28,7 +27,7 @@ export async function initCommand() {
 
     let apiKey: string | undefined;
 
-    if (provider) {
+    if (provider !== "ollama") {
         apiKey = (await p.password({
             message: "Enter your API key:",
             mask: "*",
