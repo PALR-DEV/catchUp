@@ -48,7 +48,13 @@ export async function summarize(diff: string, config: Config): Promise<string> {
     const { text } = await generateText({
         model,
         prompt: buildPrompt(diff),
+        temperature: 0.3,
+        maxOutputTokens: 2048,
+
     });
 
-    return text;
+    return text
+    .replace(/^```[\w]*\n?/, "")
+    .replace(/\n?```$/, "")
+    .trim();
 }

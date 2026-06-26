@@ -32,51 +32,65 @@ export async function openInBrowser(markdown: string): Promise<void> {
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0d1117;
-      color: #e6edf3;
+      background: #ffffff;
+      color: #111111;
       padding: 40px 20px;
     }
     #content {
       max-width: 800px;
       margin: 0 auto;
     }
-    h1, h2, h3 { 
-      color: #58a6ff; 
-      margin: 24px 0 12px; 
+    h1, h2, h3 {
+      color: #111111;
+      margin: 24px 0 12px;
+      font-weight: 600;
     }
-    p { 
-      line-height: 1.7; 
-      margin-bottom: 16px; 
+    h2 { border-bottom: 1px solid #eeeeee; padding-bottom: 6px; }
+    p {
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: #333333;
     }
     code {
-      background: #161b22;
+      background: #f4f4f4;
       padding: 2px 6px;
       border-radius: 4px;
       font-family: monospace;
-      color: #79c0ff;
+      color: #111111;
+      font-size: 0.9em;
     }
     pre {
-      background: #161b22;
+      background: #f4f4f4;
       padding: 16px;
-      border-radius: 8px;
+      border-radius: 6px;
       overflow-x: auto;
       margin-bottom: 16px;
+      border: 1px solid #e0e0e0;
+    }
+    pre code {
+      background: none;
+      padding: 0;
     }
     ul, ol {
       padding-left: 24px;
       margin-bottom: 16px;
     }
-    li { line-height: 1.7; margin-bottom: 4px; }
+    li { line-height: 1.7; margin-bottom: 4px; color: #333333; }
     header {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       margin-bottom: 32px;
       padding-bottom: 16px;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 2px solid #111111;
     }
-    header h1 { margin: 0; font-size: 1.2rem; }
-    .date { color: #8b949e; font-size: 0.85rem; }
+    header h1 { 
+      margin: 0; 
+      font-size: 1.4rem; 
+      letter-spacing: -0.5px;
+      border: none;
+    }
+    .date { color: #888888; font-size: 0.85rem; }
   </style>
 </head>
 <body>
