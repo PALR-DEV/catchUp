@@ -59,7 +59,7 @@ catchup config set-key sk-...
 |----------|--------|
 | Claude (Anthropic) | ✅ Available |
 | OpenAI | ✅ Available |
-| Ollama | 🔜 Coming Soon |
+| Ollama | ✅ Available |
 
 ## Supported Timeframes
 
