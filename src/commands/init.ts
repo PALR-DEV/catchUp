@@ -2,6 +2,7 @@ import * as p from "@clack/prompts";
 
 import { type Provider } from "../types/index";
 import { saveConfig } from "../libs/config";
+import { execSync } from "child_process";
 
 export async function initCommand() {
     console.clear();
@@ -42,6 +43,16 @@ export async function initCommand() {
     } else {
         p.log.info(
             "Make sure Ollama is installed and running with: ollama serve"
+        );
+
+
+        const output = execSync("ollama list", { stdio: ["pipe", "pipe", "ignore"] })
+            .toString()
+            .trim()
+            .split("\n")
+        p.note(
+            output.join("\n"),
+            "Available Ollama models"
         );
         const ollamaModel = await p.text({
             message: "What model do you want to use?",

@@ -1,6 +1,6 @@
 import * as p from "@clack/prompts";
 import { type Provider } from "../types/index";
-import { loadConfig, saveConfig } from "../libs/config";
+import { getConfigDisplay, loadConfig, saveConfig } from "../libs/config";
 
 export function showConfig() {
     const config = loadConfig();
@@ -8,10 +8,7 @@ export function showConfig() {
         p.log.error("No config found. Run catchup init first.");
         return;
     }
-    p.log.info(`Provider: ${config.provider}`);
-    p.log.info(
-        `API Key:  ${config.apiKey ? "****" + config.apiKey.slice(-4) : "none"}`
-    );
+    p.log.info(getConfigDisplay(config));
 }
 
 export function setProvider(provider: string) {
