@@ -28,6 +28,5 @@ export function getConfigDisplay(config: Config): string {
     if (config.provider === "ollama") {
         return `Provider: ollama\nModel:    ${config.model}`;
     }
-        return `Provider: ${config.provider}\nAPI Key:  ${config.apiKey ? "****" + config.apiKey.slice(-4) : "none"
-}`;
+    return `Provider: ${config.provider}\nAPI Key:  ${config.apiKey ? "****" + config.apiKey.slice(-4) : "none"}\nModel:    ${config.model ?? "none"}`;
 }

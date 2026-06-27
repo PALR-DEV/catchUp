@@ -3,6 +3,7 @@ import * as p from "@clack/prompts";
 import { type Provider } from "../types/index";
 import { saveConfig } from "../libs/config";
 import { execSync } from "child_process";
+import { fetchProviderModels } from "../helpers/fetchAllModels";
 
 export async function initCommand() {
     console.clear();
@@ -11,7 +12,7 @@ export async function initCommand() {
     const provider = await p.select({
         message: "Which AI provider do you want to use?",
         options: [
-            { value: "claude", label: "Claude (Anthropic)" },
+            { value: "anthropic", label: "Claude (Anthropic)" },
             { value: "openai", label: "OpenAI" },
             {
                 value: "ollama",
@@ -30,6 +31,7 @@ export async function initCommand() {
     let model: string | undefined;
 
     if (provider !== "ollama") {
+
         apiKey = (await p.password({
             message: "Enter your API key:",
             mask: "*",
@@ -40,6 +42,26 @@ export async function initCommand() {
             p.cancel("Setup cancelled.");
             process.exit(0);
         }
+        const spinner = p.spinner();
+        spinner.start("Fetching available models...");
+        const models = await fetchProviderModels(provider);
+        spinner.stop("Models loaded.");
+        const selectedModel = await p.select({
+            message: "Which model do you want to use?",
+            options: models.map(m => ({
+                value: m.id,
+                label: m.name,
+                hint: `ctx: ${(m.context_window / 1000).toFixed(0)}k`,
+            })),
+        });
+
+        if (p.isCancel(selectedModel)) {
+            p.cancel("Setup cancelled.");
+            process.exit(0);
+        }
+        
+        model = selectedModel as string;
+
     } else {
         p.log.info(
             "Make sure Ollama is installed and running with: ollama serve"

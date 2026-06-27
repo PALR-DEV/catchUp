@@ -1,7 +1,6 @@
 import { generateText } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
-import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
-import { openai } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { createOpenAI } from "@ai-sdk/openai";
 import { type Config } from "../types/index";
 import { ollama } from 'ai-sdk-ollama';
 
@@ -9,11 +8,10 @@ import { ollama } from 'ai-sdk-ollama';
 
 function getModel(config: Config) {
     switch (config.provider) {
-        case "claude":
-            return anthropic("claude-sonnet-4-6");
+        case "anthropic":
+            return createAnthropic({ apiKey: config.apiKey })("claude-haiku-4-5");
         case "openai":
-            return openai("gpt-4o");
-
+            return createOpenAI({ apiKey: config.apiKey })("gpt-4o");
         case "ollama":
             return ollama("qwen3:8b");
         default:
