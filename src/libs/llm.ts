@@ -29,7 +29,7 @@ export async function summarize(diff: string, config: Config): Promise<string> {
         model,
         instructions,
         prompt: diff,
-        maxOutputTokens: config.max_tokens,
+        maxOutputTokens: config.max_tokens || undefined,
     });
 
     return text

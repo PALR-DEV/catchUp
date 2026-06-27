@@ -41,6 +41,7 @@ program
   .option("--browser", "Open summary in browser")
   .option("--save", "Save summary as markdown file")
   .option("--author <author>", "Filter by author")
+  .option("--branch <branch>", "Filter by branch")
   .action(sinceCommand);
 
   
