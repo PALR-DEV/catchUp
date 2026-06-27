@@ -1,6 +1,6 @@
 {
   "name": "@palr-dev/catchup",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "this is a cli tool to get a summary of all changes made in a codebase in a time frame",
   "keywords": [
     "cli",
@@ -8,8 +8,8 @@
     "AI"
   ],
   "publishConfig": {
-  "access": "public"
-},
+    "access": "public"
+  },
   "license": "MIT",
   "author": "Pedro Lorenzo Rosario",
   "type": "module",
