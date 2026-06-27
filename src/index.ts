@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { sinceCommand } from "./commands/since";
 import { initCommand } from "./commands/init";
 import { showConfig, setProvider, setKey } from "./commands/config";
+import { version } from "../package.json";
 
 
 const C1 = "\x1b[95m";  // bright magenta
@@ -20,6 +21,8 @@ ${C4}██║     ██╔══██║   ██║   ██║     ██�
 ${C5}╚██████╗██║  ██║   ██║   ╚██████╗██║  ██║╚██████╔╝██║
 ${C5} ╚═════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝${RESET}
 ${DIM}                      stay in the loop.${RESET}
+
+${C1}version${RESET} ${C5}v${version}${RESET}
 `;
 
 const program = new Command();
