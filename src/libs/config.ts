@@ -15,6 +15,7 @@ export function loadConfig(): Config | null {
         return {
             provider: process.env.CATCHUP_PROVIDER as Config["provider"],
             apiKey: process.env.CATCHUP_API_KEY,
+            model: process.env.CATCHUP_MODEL,
         }
     }
     return null;
@@ -25,8 +26,12 @@ export function saveConfig(config: Config): void {
 }
 
 export function getConfigDisplay(config: Config): string {
-    if (config.provider === "ollama") {
-        return `Provider: ollama\nModel:    ${config.model}`;
-    }
-    return `Provider: ${config.provider}\nAPI Key:  ${config.apiKey ? "****" + config.apiKey.slice(-4) : "none"}\nModel:    ${config.model ?? "none"}`;
+    const display = {
+        provider: config.provider,
+        apiKey: config.apiKey ? "****" + config.apiKey.slice(-4) : "none",
+        model: config.model ?? "none",
+        maxTokens: new Intl.NumberFormat('en', {notation: 'compact'}).format(config.max_tokens ?? 0),
+        contextWindow: new Intl.NumberFormat('en', {notation: 'compact'}).format(config.context_window ?? 0),
+    };
+    return JSON.stringify(display, null, 2);
 }
