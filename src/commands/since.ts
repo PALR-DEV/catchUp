@@ -38,6 +38,7 @@ export async function sinceCommand(
         spinner.start(`Fetching changes for the last ${timeframe}...`);
         const diff = await getDiff(timeframe);
 
+        
         if (!diff) {
             spinner.stop("No changes found for that timeframe.");
             process.exit(0);
