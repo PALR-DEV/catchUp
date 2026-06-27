@@ -38,11 +38,16 @@
     "undici-types": "^8.3.0"
   },
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.1",
     "@types/bun": "latest",
     "@types/marked-terminal": "^6.1.1",
     "@types/ms": "^2.1.0",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.8.4"
+    "prettier": "^3.8.4",
+    "semantic-release": "^25.0.5"
   },
   "peerDependencies": {
     "typescript": "^5"
