@@ -1,5 +1,5 @@
 {
-  "name": "catchup",
+  "name": "@palr-dev/catchup",
   "version": "1.2.0",
   "description": "this is a cli tool to get a summary of all changes made in a codebase in a time frame",
   "keywords": [
