@@ -10,7 +10,7 @@ A CLI tool that uses AI to summarize everything that changed in your codebase wh
 ## Installation
 
 ```bash
-npm install -g catchup
+npm install -g @palr-dev/catchup
 ```
 
 ## Setup
