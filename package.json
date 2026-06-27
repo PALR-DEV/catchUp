@@ -7,6 +7,9 @@
     "tool",
     "AI"
   ],
+  "publishConfig": {
+  "access": "public"
+},
   "license": "MIT",
   "author": "Pedro Lorenzo Rosario",
   "type": "module",
