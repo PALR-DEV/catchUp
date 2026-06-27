@@ -6,10 +6,9 @@ export function getDiff(timeframe: StringValue) {
     const since = sinceDate(timeframe).toISOString();
 
     try {
-        const log = execSync(`git log --since="${since}" --oneline`).toString();
-        const diff = execSync(`git diff --stat HEAD@{${timeframe}}`).toString();
-        if (!log && !diff) return "";
-        return `COMMITS:\n${log}\n\nDIFF SUMMARY:\n${diff}`;
+        const log = execSync(`git --no-pager log --since="${since}" --pretty --no-color --patch`).toString();
+        if (!log) return "";
+        return log;
     } catch {
         throw new Error("No commits found in this repository.");
     }
