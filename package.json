@@ -1,7 +1,6 @@
 {
   "name": "catchup",
   "version": "1.0.0",
-  "private": true,
   "description": "this is a cli tool to get a summary of all changes made in a codebase in a time frame",
   "keywords": [
     "cli",
