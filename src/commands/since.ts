@@ -11,13 +11,17 @@ import { count } from "console";
 
 export async function sinceCommand(
     timeframe: StringValue,
-    options: { browser?: boolean; save?: boolean, author?: string }
+    options: { browser?: boolean; save?: boolean, author?: string, branch?: string }
 ) {
     console.clear();
     p.intro("Catchup");
 
     if(options.author) {
         p.log.info(`Filtering commits by author: ${options.author}`);
+    }
+
+    if(options.branch) {
+        p.log.info(`Filtering commits by branch: ${options.branch}`);
     }
 
     const config = loadConfig();
@@ -38,7 +42,7 @@ export async function sinceCommand(
 
     try {
         spinner.start(`Fetching changes for the last ${timeframe}...`);
-        const diff = await getDiff(timeframe, options.author);
+        const diff = await getDiff(timeframe, options.author, options.branch);
 
         
         if (!diff && (await getCommitCount(timeframe)) === 0) {
