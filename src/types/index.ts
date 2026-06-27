@@ -4,6 +4,8 @@ export interface Config {
     provider:Provider;
     apiKey?:string;
     model?:string;
+    max_tokens?:number;
+    context_window?:number;
 }
 
 export interface GatewayModel {

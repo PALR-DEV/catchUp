@@ -1,6 +1,6 @@
 import * as p from "@clack/prompts";
 
-import { type Provider } from "../types/index";
+import { type GatewayModel, type Provider } from "../types/index";
 import { saveConfig } from "../libs/config";
 import { execSync } from "child_process";
 import { fetchProviderModels } from "../helpers/fetchAllModels";
@@ -29,6 +29,7 @@ export async function initCommand() {
 
     let apiKey: string | undefined;
     let model: string | undefined;
+    let modelInfo: GatewayModel | undefined;
 
     if (provider !== "ollama") {
 
@@ -60,7 +61,8 @@ export async function initCommand() {
             process.exit(0);
         }
         
-        model = selectedModel as string;
+        model = selectedModel;
+        modelInfo = models.find(m => m.id === selectedModel);
 
     } else {
         p.log.info(
@@ -86,10 +88,10 @@ export async function initCommand() {
             p.cancel("Setup cancelled.");
             process.exit(0);
         }
-        model = ollamaModel as string;
+        model = ollamaModel;
     }
 
-    saveConfig({ provider: provider as Provider, apiKey, model });
+    saveConfig({ provider: provider as Provider, apiKey, model, max_tokens:modelInfo?.max_tokens, context_window:modelInfo?.context_window });
     p.log.success("All done!");
     p.outro("Config saved! You are ready to use catchup.");
 }
