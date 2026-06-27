@@ -15,7 +15,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target node"
+    "build": "bun build src/index.ts --outdir dist --target node --banner '#!/usr/bin/env node'"
+  },
+  "bin": {
+    "catchup": "./dist/index.js"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.0",
