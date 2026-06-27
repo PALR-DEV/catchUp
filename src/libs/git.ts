@@ -1,6 +1,5 @@
 import { sinceDate } from "./time";
 import type { StringValue } from "ms";
-import * as p from "@clack/prompts";
 import { exec, execSync } from "child_process";
 import { promisify } from "util";
 const execAsync = promisify(exec);

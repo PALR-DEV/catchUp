@@ -8,8 +8,9 @@ terminalMarked.setOptions({ renderer: new TerminalRenderer() as unknown as Rende
 
 const htmlMarked = new Marked();
 
-export function renderMarkdown(markdown: string): void {
-  console.log(terminalMarked.parse(markdown));
+export async function renderMarkdown(markdown: string): Promise<void> {
+  const rendered = await terminalMarked.parse(markdown);
+  console.log(rendered);
 }
 
 export function saveToFile(markdown: string): void {

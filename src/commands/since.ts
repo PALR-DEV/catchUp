@@ -6,6 +6,8 @@ import { getDiff } from "../libs/git";
 import { summarize } from "../libs/llm";
 import { openInBrowser, renderMarkdown, saveToFile } from "../libs/render";
 import { isOllamaRunning } from "../helpers/ollama";
+import { getCommitCount } from "../helpers/commitCount";
+import { count } from "console";
 
 export async function sinceCommand(
     timeframe: StringValue,
@@ -31,6 +33,8 @@ export async function sinceCommand(
     const spinner = p.spinner();
 
     try {
+        const commitCount = await getCommitCount(timeframe);
+        p.log.info(`Found ${commitCount} commits in the last ${timeframe}`);
         spinner.start(`Fetching changes for the last ${timeframe}...`);
         const diff = await getDiff(timeframe);
 
@@ -50,7 +54,7 @@ export async function sinceCommand(
         if (options.browser) return openInBrowser(summary);
         if (options.save) return saveToFile(summary);
 
-        renderMarkdown(summary);
+        await renderMarkdown(summary);
     } catch (error) {
         spinner.stop();
         p.log.error(error instanceof Error ? error.message : "Something went wrong.");
