@@ -11,10 +11,14 @@ import { count } from "console";
 
 export async function sinceCommand(
     timeframe: StringValue,
-    options: { browser?: boolean; save?: boolean }
+    options: { browser?: boolean; save?: boolean, author?: string }
 ) {
     console.clear();
-    p.intro("catchup");
+    p.intro("Catchup");
+
+    if(options.author) {
+        p.log.info(`Filtering commits by author: ${options.author}`);
+    }
 
     const config = loadConfig();
 
@@ -33,14 +37,17 @@ export async function sinceCommand(
     const spinner = p.spinner();
 
     try {
-        const commitCount = await getCommitCount(timeframe);
-        p.log.info(`Found ${commitCount} commits in the last ${timeframe}`);
         spinner.start(`Fetching changes for the last ${timeframe}...`);
-        const diff = await getDiff(timeframe);
+        const diff = await getDiff(timeframe, options.author);
 
         
-        if (!diff) {
+        if (!diff && (await getCommitCount(timeframe)) === 0) {
             spinner.stop("No changes found for that timeframe.");
+            process.exit(0);
+        }
+
+        if(!diff && options.author) {
+            spinner.stop(`No commits found for author "${options.author}" in the last ${timeframe}.`);
             process.exit(0);
         }
 
