@@ -1,15 +1,17 @@
-import { execSync } from "child_process";
 import { sinceDate } from "./time";
 import type { StringValue } from "ms";
 import * as p from "@clack/prompts";
-export function getDiff(timeframe: StringValue) {
-    const since = sinceDate(timeframe).toISOString();
+import { exec, execSync } from "child_process";
+import { promisify } from "util";
+const execAsync = promisify(exec);
 
+export async function  getDiff(timeframe: StringValue) {
+    const since = sinceDate(timeframe).toISOString();
     try {
-        const log = execSync(`git --no-pager log --since="${since}" --pretty --no-color --patch`).toString();
-        if (!log) return "";
-        return log;
-    } catch {
+        const { stdout } = await execAsync(`git --no-pager log --since="${since}" --pretty --no-color --patch`, { maxBuffer: 1024 * 1024 * 250 });
+        if (!stdout) return "";
+        return stdout;
+    } catch  {
         throw new Error("No commits found in this repository.");
     }
 }

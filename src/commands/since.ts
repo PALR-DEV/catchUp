@@ -32,7 +32,7 @@ export async function sinceCommand(
 
     try {
         spinner.start(`Fetching changes for the last ${timeframe}...`);
-        const diff = getDiff(timeframe);
+        const diff = await getDiff(timeframe);
 
         if (!diff) {
             spinner.stop("No changes found for that timeframe.");
