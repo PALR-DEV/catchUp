@@ -37,6 +37,7 @@ program
   .description("Summarize changes e.g. 1w, 3d, 2h")
   .option("--browser", "Open summary in browser")
   .option("--save", "Save summary as markdown file")
+  .option("--author <author>", "Filter by author")
   .action(sinceCommand);
 
   

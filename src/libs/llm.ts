@@ -48,6 +48,7 @@ export async function summarize(diff: string, config: Config): Promise<string> {
     const { text } = await generateText({
         model,
         prompt: buildPrompt(diff),
+        
     });
 
     return text
