@@ -32,7 +32,7 @@ const configCmd = program.command("config").description("Manage your catchup con
 program
   .name("catchup")
   .description("Summarize codebase changes while you were away")
-  .version("1.0.0")
+  .version(version, "-v, --version")
   .addHelpText("beforeAll", BANNER);
 
 program
