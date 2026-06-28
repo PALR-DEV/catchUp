@@ -1,13 +1,25 @@
 import * as p from "@clack/prompts";
 
 import { type GatewayModel, type Provider } from "../types/index";
-import { saveConfig } from "../libs/config";
+import { loadConfig, saveConfig } from "../libs/config";
 import { execSync } from "child_process";
 import { fetchProviderModels } from "../helpers/fetchAllModels";
 
 export async function initCommand() {
     console.clear();
+    const config = loadConfig();
+    
     p.intro("catchup — setup");
+    if(config) {
+        const shouldProceed = await p.confirm({
+            message: 'Config already exists. Are you sure you want to overwrite it?',
+        });
+
+        if (p.isCancel(shouldProceed) || !shouldProceed) {
+            p.cancel("Setup cancelled.");
+            process.exit(0);
+        }
+    }
 
     const provider = await p.select({
         message: "Which AI provider do you want to use?",
