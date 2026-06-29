@@ -19,7 +19,6 @@ function getModel(config: Config) {
 
 export async function summarize(diff: string, config: Config, systemPromptKey?: string): Promise<string> {
     const model = getModel(config);
-    try {
         const { text } = await generateText({
             model,
             timeout: { totalMs: 1800000 },
@@ -31,8 +30,4 @@ export async function summarize(diff: string, config: Config, systemPromptKey?: 
             .replace(/^```[\w]*\n?/, "")
             .replace(/\n?```$/, "")
             .trim();
-    } catch (err) {
-        console.error("[debug] full error:", JSON.stringify(err, null, 2));
-        throw err;
-    }
 }
