@@ -3,6 +3,7 @@ import { sinceCommand } from "./commands/since";
 import { initCommand } from "./commands/init";
 import { showConfig, setProvider, setKey } from "./commands/config";
 import { version } from "../package.json";
+import { authorsCommand } from "./commands/authors";
 
 
 const C1 = "\x1b[95m";  // bright magenta
@@ -48,6 +49,9 @@ program
   
 program.command("init").description("Setup your AI provider")
 .action(initCommand);
+
+program.command("authors").description("List all authors in the repository")
+.action(authorsCommand);
 
 configCmd
   .command("show")

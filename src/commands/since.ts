@@ -15,22 +15,25 @@ export async function sinceCommand(
     console.clear();
     p.intro("Catchup");
 
-    if(options.author) {
+    if (options.author) {
         p.log.info(`Filtering commits by author: ${options.author}`);
     }
 
-    if(options.branch) {
+    if (options.branch) {
         p.log.info(`Filtering commits by branch: ${options.branch}`);
     }
 
     if (options.grep) {
         p.log.info(`Filtering commits by message pattern: ${options.grep}`);
+    }
+
+    if (options.author || options.branch || options.grep) {
         const commits = await getCommitList(timeframe, options.author, options.branch, options.grep);
         if (commits.length > 0) {
             p.note(commits.join("\n"), `Commits matched (${commits.length})`);
         }
     }
-    
+
     const config = loadConfig();
 
     if (!config) {
@@ -51,13 +54,13 @@ export async function sinceCommand(
         spinner.start(`Fetching changes for the last ${timeframe}...`);
         const diff = await getDiff(timeframe, options.author, options.branch, options.grep);
 
-        
+
         if (!diff && (await getCommitCount(timeframe)) === 0) {
             spinner.stop("No changes found for that timeframe.");
             process.exit(0);
         }
 
-        if(!diff && options.author) {
+        if (!diff && options.author) {
             spinner.stop(`No commits found for author "${options.author}" in the last ${timeframe}.`);
             process.exit(0);
         }
