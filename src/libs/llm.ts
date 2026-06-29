@@ -19,18 +19,20 @@ function getModel(config: Config) {
 
 export async function summarize(diff: string, config: Config): Promise<string> {
     const model = getModel(config);
-    const { text } = await generateText({
-        model,
-        timeout: {
-            totalMs: 1800000
-        },
-        system: SYSTEM_PROMPTS[config.system_prompt_option ?? "SR_SOFTWARE_ENGINEER_BRIEF"],
-        prompt: diff,
-        maxOutputTokens: config.max_tokens || undefined,
-    });
-
-    return text
-        .replace(/^```[\w]*\n?/, "")
-        .replace(/\n?```$/, "")
-        .trim();
+    try {
+        const { text } = await generateText({
+            model,
+            timeout: { totalMs: 1800000 },
+            system: SYSTEM_PROMPTS[config.system_prompt_option ?? "SR_SOFTWARE_ENGINEER_BRIEF"],
+            prompt: diff,
+            maxOutputTokens: config.max_tokens || undefined,
+        });
+        return text
+            .replace(/^```[\w]*\n?/, "")
+            .replace(/\n?```$/, "")
+            .trim();
+    } catch (err) {
+        console.error("[debug] full error:", JSON.stringify(err, null, 2));
+        throw err;
+    }
 }

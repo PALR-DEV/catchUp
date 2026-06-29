@@ -1,6 +1,6 @@
 import * as p from "@clack/prompts";
 
-import { type GatewayModel, type Provider } from "../types/index";
+import { type Provider } from "../types/index";
 import { loadConfig, saveConfig } from "../libs/config";
 import { execSync } from "child_process";
 import { fetchProviderModels } from "../helpers/fetchAllModels";
@@ -41,7 +41,6 @@ export async function initCommand() {
 
     let apiKey: string | undefined;
     let model: string | undefined;
-    let modelInfo: GatewayModel | undefined;
 
     if (provider !== "ollama") {
 
@@ -55,16 +54,12 @@ export async function initCommand() {
             p.cancel("Setup cancelled.");
             process.exit(0);
         }
-        const spinner = p.spinner();
-        spinner.start("Fetching available models...");
-        const models = await fetchProviderModels(provider);
-        spinner.stop("Models loaded.");
+        const models = fetchProviderModels(provider as Exclude<typeof provider, 'ollama'>);
         const selectedModel = await p.select({
             message: "Which model do you want to use?",
             options: models.map(m => ({
                 value: m.id,
                 label: m.name,
-                hint: `ctx: ${(m.context_window / 1000).toFixed(0)}k`,
             })),
         });
 
@@ -72,9 +67,8 @@ export async function initCommand() {
             p.cancel("Setup cancelled.");
             process.exit(0);
         }
-        
+
         model = selectedModel;
-        modelInfo = models.find(m => m.id === selectedModel);
 
     } else {
         p.log.info(
@@ -103,7 +97,7 @@ export async function initCommand() {
         model = ollamaModel;
     }
 
-    saveConfig({ provider: provider as Provider, apiKey, model, max_tokens:modelInfo?.max_tokens, context_window:modelInfo?.context_window });
+    saveConfig({ provider: provider as Provider, apiKey, model });
     p.log.success("All done!");
     p.outro("Config saved! You are ready to use catchup.");
 }
