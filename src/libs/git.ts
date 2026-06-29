@@ -29,3 +29,20 @@ export async function getDiff(timeframe: StringValue, author?: string, branch?: 
         throw new Error("No commits found in this repository.");
     }
 }
+
+export async function getCommitList(timeframe:StringValue, author?: string, branch?: string, grep?: string): Promise<string[]> {
+    const since = sinceDate(timeframe).toISOString();
+    try {
+        const authorFilter = author ? `--author="${author}"` : "";
+        const grepFilter = grep ? `--grep="${grep}"` : "";
+        const range = branch ? `${await getBaseBranch()}..${branch}` : "";
+        const { stdout } = await execAsync(
+            `git --no-pager log --since="${since}" ${authorFilter} ${grepFilter} ${range} --pretty=format:"%h  %s  —  %an,  %ar"`,
+            { maxBuffer: 1024 * 1024 * 10 }
+        );
+        if (!stdout) return [];
+        return stdout.trim().split("\n").filter(line => line !== "")
+    } catch (error) {
+        throw new Error("No commits found in this repository.");
+    }
+}

@@ -17,13 +17,13 @@ function getModel(config: Config) {
     }
 }
 
-export async function summarize(diff: string, config: Config): Promise<string> {
+export async function summarize(diff: string, config: Config, systemPromptKey?: string): Promise<string> {
     const model = getModel(config);
     try {
         const { text } = await generateText({
             model,
             timeout: { totalMs: 1800000 },
-            system: SYSTEM_PROMPTS[config.system_prompt_option ?? "SR_SOFTWARE_ENGINEER_BRIEF"],
+            system: SYSTEM_PROMPTS[systemPromptKey ?? config.system_prompt_option ?? "SR_SOFTWARE_ENGINEER_BRIEF"],
             prompt: diff,
             maxOutputTokens: config.max_tokens || undefined,
         });

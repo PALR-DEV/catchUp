@@ -2,7 +2,7 @@ import type { StringValue } from "ms";
 
 import * as p from "@clack/prompts";
 import { loadConfig } from "../libs/config";
-import { getDiff } from "../libs/git";
+import { getCommitList, getDiff } from "../libs/git";
 import { summarize } from "../libs/llm";
 import { openInBrowser, renderMarkdown, saveToFile } from "../libs/render";
 import { isOllamaRunning } from "../helpers/ollama";
@@ -23,8 +23,12 @@ export async function sinceCommand(
         p.log.info(`Filtering commits by branch: ${options.branch}`);
     }
 
-    if(options.grep) {
+    if (options.grep) {
         p.log.info(`Filtering commits by message pattern: ${options.grep}`);
+        const commits = await getCommitList(timeframe, options.author, options.branch, options.grep);
+        if (commits.length > 0) {
+            p.note(commits.join("\n"), `Commits matched (${commits.length})`);
+        }
     }
     
     const config = loadConfig();
@@ -61,7 +65,7 @@ export async function sinceCommand(
         spinner.stop("✓ Changes fetched!");
 
         spinner.start("Summarizing with AI...");
-        const summary = await summarize(diff, config);
+        const summary = await summarize(diff, config, options.grep ? "GREP_FILTER" : undefined);
         spinner.stop("✓ Done!");
 
         p.outro("catchup complete");

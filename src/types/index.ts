@@ -27,6 +27,11 @@ export const SYSTEM_PROMPTS: Record<string, string> = {
     get SR_SOFTWARE_ENGINEER_BRIEF(): string {
         return readFileSync(getSystemPromptPath("srSoftwareEngineerBrief.md"), "utf-8");
     },
+
+    get GREP_FILTER(): string {
+        return readFileSync(getSystemPromptPath("grepFilter.md"), "utf-8");
+    },
+
 };
 
 export interface Config {
