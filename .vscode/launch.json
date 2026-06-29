@@ -1,0 +1,73 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "bun",
+      "request": "launch",
+      "name": "Debug: since 1d",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": ["since", "1d"],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "watchMode": false
+    },
+    {
+      "type": "bun",
+      "request": "launch",
+      "name": "Debug: since 1w --author",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": ["since", "1w", "--author", "your-name"],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "watchMode": false
+    },
+    {
+      "type": "bun",
+      "request": "launch",
+      "name": "Debug: since (custom args)",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": ["since", "1d", "--browser"],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "watchMode": false
+    },
+    {
+      "type": "bun",
+      "request": "launch",
+      "name": "Debug: init",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": ["init"],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "watchMode": false
+    },
+    {
+      "type": "bun",
+      "request": "launch",
+      "name": "Debug: config show",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": ["config", "show"],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "watchMode": false
+    },
+    {
+      "type": "bun",
+      "request": "launch",
+      "name": "Debug: CLI (prompt for args)",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": ["${input:cliArgs}"],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "watchMode": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": "cliArgs",
+      "type": "promptString",
+      "description": "Enter CLI arguments (e.g., 'since 1d --browser')",
+      "default": "since 1d"
+    }
+  ]
+}
