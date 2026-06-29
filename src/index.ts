@@ -42,6 +42,7 @@ program
   .option("--save", "Save summary as markdown file")
   .option("--author <author>", "Filter by author")
   .option("--branch <branch>", "Filter by branch")
+  .option("--grep <pattern>", "Filter commits by message pattern (supports regex)")
   .action(sinceCommand);
 
   

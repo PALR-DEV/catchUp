@@ -13,13 +13,14 @@ async function getBaseBranch(): Promise<string> {
     }
 }
 
-export async function getDiff(timeframe: StringValue, author?: string, branch?: string): Promise<string> {
+export async function getDiff(timeframe: StringValue, author?: string, branch?: string, grep?: string): Promise<string> {
     const since = sinceDate(timeframe).toISOString();
     try {
         const authorFilter = author ? `--author="${author}"` : "";
+        const grepFilter = grep ? `--grep="${grep}"` : "";
         const range = branch ? `${await getBaseBranch()}..${branch}` : "";
         const { stdout } = await execAsync(
-            `git --no-pager log --since="${since}" ${authorFilter} ${range} --pretty --no-color --patch`,
+            `git --no-pager log --since="${since}" ${authorFilter} ${grepFilter} ${range} --pretty --no-color --patch`,
             { maxBuffer: 1024 * 1024 * 250 }
         );
         if (!stdout) return "";

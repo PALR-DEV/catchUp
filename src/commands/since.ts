@@ -7,11 +7,10 @@ import { summarize } from "../libs/llm";
 import { openInBrowser, renderMarkdown, saveToFile } from "../libs/render";
 import { isOllamaRunning } from "../helpers/ollama";
 import { getCommitCount } from "../helpers/commitCount";
-import { count } from "console";
 
 export async function sinceCommand(
     timeframe: StringValue,
-    options: { browser?: boolean; save?: boolean, author?: string, branch?: string }
+    options: { browser?: boolean; save?: boolean, author?: string, branch?: string, grep?: string }
 ) {
     console.clear();
     p.intro("Catchup");
@@ -24,6 +23,10 @@ export async function sinceCommand(
         p.log.info(`Filtering commits by branch: ${options.branch}`);
     }
 
+    if(options.grep) {
+        p.log.info(`Filtering commits by message pattern: ${options.grep}`);
+    }
+    
     const config = loadConfig();
 
     if (!config) {
@@ -42,7 +45,7 @@ export async function sinceCommand(
 
     try {
         spinner.start(`Fetching changes for the last ${timeframe}...`);
-        const diff = await getDiff(timeframe, options.author, options.branch);
+        const diff = await getDiff(timeframe, options.author, options.branch, options.grep);
 
         
         if (!diff && (await getCommitCount(timeframe)) === 0) {
